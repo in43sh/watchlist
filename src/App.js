@@ -3,7 +3,6 @@ import './App.css';
 import axios from 'axios';
 import Search from './Search'
 import ShowMovies from './ShowMovies'
-// where is our express for the requirement
 
 class App extends Component {
   constructor(){
@@ -12,7 +11,7 @@ class App extends Component {
       titleInput: '',
       yearInput: '',
       movies: [],
-      // watchlist: []
+      watchlist: []
     }
     this.setMovies = this.setMovies.bind(this);
     this.getMovies = this.getMovies.bind(this);
@@ -28,7 +27,10 @@ class App extends Component {
   getMovies() {
     console.log('123123123')
     // console.log(resp.data)
-    axios.get(`http://www.theimdbapi.org/api/find/movie?title=${this.state.titleInput}&year=${this.state.yearInput}`).then((resp) => {
+    const endpoint = `http://www.theimdbapi.org/api/find/movie?title=${this.state.titleInput}&year=${this.state.yearInput}`
+    console.log('endpoint -> ', endpoint)
+    axios.get(endpoint).then((resp) => {
+      console.log(resp.data)
       console.log(resp.data)
       // this.setState({movies: resp.data})
       this.setMovies(resp.data);
@@ -37,29 +39,20 @@ class App extends Component {
     })
   }
 
-  handleTitleChange(val) {
-    this.setState({ titleInput: val })
+  handleTitleChange(event) {
+    this.setState({ titleInput: event.target.value })
   }
 
-  handleYearChange(val) {
-    this.setState({ yearInput: val })
+  handleYearChange(event) {
+    this.setState({ yearInput: event.target.value })
   }
-  
-  // addMovieToWatchList(index) {
-  //   this.setState({
-  //     watchlist: this.state.watchlist.concat(index)
+
+  // showWatchlist() {
+  //   const watchlistFromController = axios.get('http://localhost:3535/api/getwatchlist').then((res) => {
+  //     this.setState({watchlist: res.data})
+  //   }).catch((err) => {
+  //     console.log(err)
   //   })
-  // }
-  
-  // removeMovieFromWatchList(index) {
-  //   this.setState({
-  //     watchlist: this.state.watchlist.filter(movieId => movieId !== index)
-  //   })
-  // }
-  
-  // addMovieProperties(movie) {
-  //   const isInWatchlist = this.state.watchlist.includes(movie.imdb_id)
-  //   return Object.assign({}, movie, { isInWatchlist: isInWatchlist })
   // }
 
   render() {
@@ -73,11 +66,9 @@ class App extends Component {
           handleYearChange= { this.handleYearChange }
         />
         <ShowMovies 
-          moviesArray = { this.state.movies } //don't understand
-          // addMovieToWatchList = {this.addMovieToWatchList.bind(this)}
-          // removeMovieToWatchList = {this.removeMovieFromWatchList.bind(this)}
-          // update from watch list
+          moviesArray = { this.state.movies }
         />
+        {/* <button onClick={ showWatchlist }>watchlist</button> */}
       </div>
       </body>
     );

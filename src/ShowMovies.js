@@ -16,7 +16,6 @@ export default class ShowMovies extends Component {
     this.addMovieToWatchList = this.addMovieToWatchList.bind(this)
   }
 
-
   addMovieToWatchList(i) {
     axios.post('http://localhost:3535/api/addmovie', {
       imdbID: this.props.moviesArray[i].imdb_id,
@@ -27,26 +26,16 @@ export default class ShowMovies extends Component {
       this.setState({movies: this.props.moviesArray})
     })
   }
-
-  // renderButton(index, isInWatchlist) {
-  //   if (isInWatchlist) {
-  //     return (<button onClick={this.removeMovieFromWatchList}>-</button>)
-  //   }
-  //   return (<button onClick={this.addMovieToWatchList}>+</button>)
-  // }
-
   
   render() {
     console.log(this.props, 'showmovies props')
 
     var displayArray = this.props.moviesArray.map((element, index) => {
       return (
-        <div className="SearchResults"key={index}>
+        <div className="SearchResults" key={index}>
           <span className="SearchResultsTitle">{ element.title }</span>
           <span className="SearchResultsYear">{ element.year }</span>
-          {/* {this.renderButton(element.imdb_id, element.isInWatchlist)} */}
           <button onClick={()=> {this.addMovieToWatchList(index)} }>+++++</button>
-          {/* <button onClick={() => {this.removeMovieFromWatchList(index)}}></button> */}
           <br/>
           <span>{ element.storyline }</span>
           <br/>
@@ -54,7 +43,6 @@ export default class ShowMovies extends Component {
         </div>
       )
     })
-
 
     return (
       <div className="App">

@@ -1,6 +1,7 @@
+// import { watch } from "fs";
+
 var watchlist = [];
 var id = 0;
-
 
 module.exports = {
   post ( req, res ) {
@@ -9,16 +10,16 @@ module.exports = {
     id++;
     res.status(200).send( watchlist );
     console.log(watchlist);
-  }
+  },
+
+  // get (req, res) {
+  //   res.status(200).send(watchlist)
+  // }
 
   // delete (req, res) {
   //   const deleteId = req.params.imdb_id;
   //   watchlistIndex = watchlist.findIndex( movie => watchlist.id == deleteId );
   //   watchlist.splice(watchlistIndex, 1);
   //   res.status(200).send(watchlist);
-  // }
-
-  // get (req, res) {
-
   // }
 }
