@@ -11,6 +11,7 @@ class App extends Component {
     this.state = {
       titleInput: '',
       yearInput: '',
+      updateYearInput: '',
       movies: [],
       watchlist: []
     }
@@ -20,6 +21,8 @@ class App extends Component {
     this.handleYearChange = this.handleYearChange.bind(this);
     this.addMovieToWatchList = this.addMovieToWatchList.bind(this)
     this.removeMovieFromWatchList = this.removeMovieFromWatchList.bind(this)
+    // this.handleUpdateYear = this.handleUpdateYear.bind(this)
+    // this.updateYear = this.updateYear.bind(this)
     // we usually need to bind data when we passing props or we can loose this. data
   }
 
@@ -72,27 +75,40 @@ class App extends Component {
 
   assignWatchlist() {
     const watchlistFromController = axios.get('http://localhost:3535/api/getwatchlist').then((resp) => {
-      this.setState({watchlist: resp.data})
+      this.setState({ watchlist: resp.data })
       console.log(this.state.watchlist)
     }).catch((err) => {
       console.log(err)
     })
   }
 
+  // handleUpdateYear (val) {
+  //   this.setState({year: val})
+  // }
+
+  // updateYear (id, year) {
+  //   axios.put(`http://localhost:3535/api/updateyear/${id}/${year}`).then(resp => {
+  //     this.setState({ watchlist: resp.data })
+  //   })
+  // }
+
   render() {
     const displayWatchlist = this.state.watchlist.map((element, index) => {
-      return (
-        <DivWatchlist 
-          index = { index }
-          element = { element }
-        />
+      return ( 
+        <div>
+          <DivWatchlist 
+            index = { index }
+            element = { element }
+          />
+          {/* <input onChange={ (e) => this.handleUpdateYear() }></input>
+          <button onClick={ this.updateYear(element.imdb_id, this.state.year) }></button> */}
+        </div>
       )
     })
 
     return (
       <body>
         <div className="App">
-        <h3 className="Title">My watch list</h3>
         <Search
           getMovies={ this.getMovies }
           handleTitleChange={ this.handleTitleChange }
@@ -103,6 +119,7 @@ class App extends Component {
           addMovieToWatchList = { this.addMovieToWatchList }
           removeMovieFromWatchList = { this.removeMovieFromWatchList }
         />
+        <h3 className="Title">My watch list</h3>
         { displayWatchlist }
         </div>
       </body>
