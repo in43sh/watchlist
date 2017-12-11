@@ -25,7 +25,9 @@ module.exports = {
     console.log('deleteId ' + deleteId)
     let watchlistIndex = watchlist.findIndex( movie => movie.imdb_id == req.params.id );
     console.log('watchlistIndex ' + watchlistIndex)
-    watchlist.splice(watchlistIndex, 1);
+    if (watchlistIndex !== -1) {
+      watchlist.splice(watchlistIndex, 1);
+    }
     res.status(200).send(watchlist);
   }
 }

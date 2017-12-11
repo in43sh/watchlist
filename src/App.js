@@ -3,6 +3,7 @@ import './App.css';
 import axios from 'axios';
 import Search from './Search'
 import ShowMovies from './ShowMovies'
+import DivWatchlist from './DivWatchlist' 
 
 class App extends Component {
   constructor(){
@@ -17,10 +18,9 @@ class App extends Component {
     this.getMovies = this.getMovies.bind(this);
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleYearChange = this.handleYearChange.bind(this);
-    this.assignWatchlist = this.assignWatchlist.bind(this);
     this.addMovieToWatchList = this.addMovieToWatchList.bind(this)
     this.removeMovieFromWatchList = this.removeMovieFromWatchList.bind(this)
-    this.assignWatchlist = this.assignWatchlist.bind(this)
+    // we usually need to bind data when we passing props or we can loose this. data
   }
 
   setMovies(moviesArr) {
@@ -28,8 +28,6 @@ class App extends Component {
   }
 
   getMovies() {
-    console.log('123123123')
-    // console.log(resp.data)
     const endpoint = `http://www.theimdbapi.org/api/find/movie?title=${this.state.titleInput}&year=${this.state.yearInput}`
     console.log('endpoint -> ', endpoint)
     axios.get(endpoint).then((resp) => {
@@ -54,16 +52,22 @@ class App extends Component {
       title: this.state.movies[i].title,
       year: this.state.movies[i].year,
       storyline: this.state.movies[i].storyline
-    }).then(res => {
-      this.setState({ watchlist: res.data })
+    }).then(resp => {
+      this.setState({ watchlist: resp.data })
     })
   }
 
   removeMovieFromWatchList(id) {
     console.log('id ' + id)
     axios.delete(`http://localhost:3535/api/deletemovie/${id}`).then(resp => {
-      this.setState({watchlist: this.state.movies})
+      this.setState({watchlist: resp.data})
     })
+  }
+
+  // componentWillMount -> render() -> componentDidMount
+  // watchlist with saved data will load up even if we refresh the page
+  componentDidMount () {
+    this.assignWatchlist()
   }
 
   assignWatchlist() {
@@ -78,12 +82,10 @@ class App extends Component {
   render() {
     const displayWatchlist = this.state.watchlist.map((element, index) => {
       return (
-        <div key={index}>
-          <span>{ element.title }</span>
-          <span>{ element.year }</span>
-          <br/>
-          <span>{ element.storyline }</span>
-        </div>
+        <DivWatchlist 
+          index = { index }
+          element = { element }
+        />
       )
     })
 
@@ -101,7 +103,6 @@ class App extends Component {
           addMovieToWatchList = { this.addMovieToWatchList }
           removeMovieFromWatchList = { this.removeMovieFromWatchList }
         />
-        <button onClick={ this.assignWatchlist }>watchlist</button>
         { displayWatchlist }
         </div>
       </body>
