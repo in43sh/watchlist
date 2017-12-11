@@ -4,7 +4,7 @@ var watchlist = [];
 var id = 0;
 
 module.exports = {
-  post ( req, res ) {
+  create ( req, res ) {
     const { imdb_id, title, year, storyline } = req.body;
     watchlist.push({ imdb_id : imdb_id, title : title, year : year, storyline : storyline });
     id++;
@@ -12,14 +12,20 @@ module.exports = {
     console.log(watchlist);
   },
 
-  // get (req, res) {
-  //   res.status(200).send(watchlist)
-  // }
+  read (req, res) {
+    res.status(200).send(watchlist)
+  },
 
-  // delete (req, res) {
-  //   const deleteId = req.params.imdb_id;
-  //   watchlistIndex = watchlist.findIndex( movie => watchlist.id == deleteId );
-  //   watchlist.splice(watchlistIndex, 1);
-  //   res.status(200).send(watchlist);
-  // }
+  // update (req, res) {
+
+  // },
+
+  delete (req, res) {
+    const deleteId = req.params.id;
+    console.log('deleteId ' + deleteId)
+    let watchlistIndex = watchlist.findIndex( movie => movie.imdb_id == req.params.id );
+    console.log('watchlistIndex ' + watchlistIndex)
+    watchlist.splice(watchlistIndex, 1);
+    res.status(200).send(watchlist);
+  }
 }

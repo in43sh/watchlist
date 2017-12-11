@@ -10,8 +10,9 @@ app.use(bodyParser.json());
 app.use(cors());
 
 const PORT = 3535;
-app.post('/api/addmovie', ctrl.post);
-// app.get('api/getwatchlist', ctrl.get);
-// app.delete('/api/deletemovie', ctrl.delete);
+app.post('/api/addmovie', ctrl.create);
+app.get('/api/getwatchlist', ctrl.read);
+// app.patch('/api/updateproperty', ctrl.update)
+app.delete('/api/deletemovie/:id', ctrl.delete);
 
 app.listen(PORT, () => console.log('we are listening on port ' + PORT));
