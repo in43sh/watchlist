@@ -16,8 +16,7 @@ export default class ShowMovies extends Component {
   }
 
   render() {
-    console.log(this.props, 'showmovies props')
-
+    // console.log(this.props, 'showmovies props')
     const displayArray = this.props.SearchResults.map((element, index) => {
       return (
         <div className="SearchResults" key={index}>
@@ -28,11 +27,9 @@ export default class ShowMovies extends Component {
           <br/>
           <span>{ element.storyline }</span>
           <br/>
-          <br/>
         </div>
       )
     })
-
     return (
       <div className="App">
         { displayArray }

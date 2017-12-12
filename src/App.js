@@ -33,9 +33,9 @@ class App extends Component {
 
   getMovies() {
     const endpoint = `http://www.theimdbapi.org/api/find/movie?title=${this.state.titleInput}&year=${this.state.yearInput}`
-    console.log('endpoint -> ', endpoint)
+    // console.log('endpoint -> ', endpoint)
     axios.get(endpoint).then((resp) => {
-      console.log(resp.data)
+      // console.log(resp.data)
       this.setMovies(resp.data);
         }).catch(err => {
       console.log(err)
@@ -62,7 +62,7 @@ class App extends Component {
   }
 
   removeMovieFromWatchList(id) {
-    console.log('id ' + id)
+    // console.log('id ' + id)
     axios.delete(`http://localhost:3535/api/deletemovie/${id}`).then(resp => {
       this.setState({watchlist: resp.data})
     })
@@ -77,7 +77,7 @@ class App extends Component {
   assignWatchlist() {
     const watchlistFromController = axios.get('http://localhost:3535/api/getwatchlist').then((resp) => {
       this.setState({ watchlist: resp.data })
-      console.log(this.state.watchlist)
+      // console.log(this.state.watchlist)
     }).catch((err) => {
       console.log(err)
     })
@@ -85,12 +85,12 @@ class App extends Component {
 
   handleUpdateYear (val) {
     this.setState({year: val})
-    console.log('year ' + this.state.year)
+    // console.log('year ' + this.state.year)
   }
 
   updateYear (id, year) {
     axios.put(`http://localhost:3535/api/updateyear/${id}/${year}`).then(resp => {
-      console.log('=====================>',resp)
+      // console.log('=====================>',resp)
       this.setState({ watchlist: resp.data })
     }).catch((err) => {
       console.log(err)
@@ -106,7 +106,7 @@ class App extends Component {
             element = { element }
           />
           <input onChange={ (e) => this.handleUpdateYear(e.target.value) }></input>
-          {console.log(element.imdb_id)}
+          {/* {console.log(element.imdb_id)} */}
           <button onClick={ (e) => this.updateYear(element.imdb_id, this.state.year) }>Change</button>
         </div>
       )
