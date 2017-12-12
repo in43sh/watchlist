@@ -16,19 +16,31 @@ module.exports = {
     res.status(200).send(watchlist)
   },
 
-  // update (req, res) {
-  //   const { text } = req.body;
-  //   const id = req.params.id;
-  //   const updateYear = req.params.year;
-  //   // const movieIndex = watchlist.findIndex( movie => movie.imdb_id == id );
-  //   // const newMovieYear = movie[movieIndex].update
-  //   const newArr = watchlist.map((movie, i) => {
-  //     if (i === id) {
-  //       movie[i].year = updateYear;
-  //     }
-  //   })
-  //   res.status(200).send( newArr )
-  // },
+  update (req, res) {
+    const { text } = req.body;
+    // console.log('req.body / text + ', text)
+    const id = req.params.id;
+    const updateYear = req.params.year;
+
+    // const movieIndex = watchlist.findIndex( movie => movie.imdb_id == id );
+    // const newMovieYear = movie[movieIndex].update
+     watchlist = watchlist.map((movie, i) => {
+      if (movie.imdb_id === id) {
+        console.log('==update===>', i, id, movie.imdb_id)
+        movie.year = updateYear;
+      }
+      return movie;
+    })
+    // const newArr = watchlist.map((movie, i) => {
+    //   console.log('=============>', i, id)
+    //   if (i === id) {
+    //     movie[i].year = updateYear;
+    //   }
+    // })
+    // watchlist.push.apply(watchlist, newArr)
+    //a.push.apply(a, b)
+    res.status(200).send( watchlist )
+  },
 
   delete (req, res) {
     const deleteId = req.params.id;

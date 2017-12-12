@@ -12,6 +12,7 @@ class App extends Component {
       titleInput: '',
       yearInput: '',
       updateYearInput: '',
+      year: '',
       movies: [],
       watchlist: []
     }
@@ -21,8 +22,8 @@ class App extends Component {
     this.handleYearChange = this.handleYearChange.bind(this);
     this.addMovieToWatchList = this.addMovieToWatchList.bind(this)
     this.removeMovieFromWatchList = this.removeMovieFromWatchList.bind(this)
-    // this.handleUpdateYear = this.handleUpdateYear.bind(this)
-    // this.updateYear = this.updateYear.bind(this)
+    this.handleUpdateYear = this.handleUpdateYear.bind(this)
+    this.updateYear = this.updateYear.bind(this)
     // we usually need to bind data when we passing props or we can loose this. data
   }
 
@@ -82,15 +83,19 @@ class App extends Component {
     })
   }
 
-  // handleUpdateYear (val) {
-  //   this.setState({year: val})
-  // }
+  handleUpdateYear (val) {
+    this.setState({year: val})
+    console.log('year ' + this.state.year)
+  }
 
-  // updateYear (id, year) {
-  //   axios.put(`http://localhost:3535/api/updateyear/${id}/${year}`).then(resp => {
-  //     this.setState({ watchlist: resp.data })
-  //   })
-  // }
+  updateYear (id, year) {
+    axios.put(`http://localhost:3535/api/updateyear/${id}/${year}`).then(resp => {
+      console.log('=====================>',resp)
+      this.setState({ watchlist: resp.data })
+    }).catch((err) => {
+      console.log(err)
+    })
+  }
 
   render() {
     const displayWatchlist = this.state.watchlist.map((element, index) => {
@@ -100,8 +105,9 @@ class App extends Component {
             index = { index }
             element = { element }
           />
-          {/* <input onChange={ (e) => this.handleUpdateYear() }></input>
-          <button onClick={ this.updateYear(element.imdb_id, this.state.year) }></button> */}
+          <input onChange={ (e) => this.handleUpdateYear(e.target.value) }></input>
+          {console.log(element.imdb_id)}
+          <button onClick={ (e) => this.updateYear(element.imdb_id, this.state.year) }>Change</button>
         </div>
       )
     })
